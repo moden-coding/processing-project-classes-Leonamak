@@ -44,12 +44,12 @@ public class App extends PApplet {
                 enemies.remove(i);
             }
         }
+        for (Enemy e : enemies) {
+            e.display();
+        }
         for (Bullets b : bullets) {
             b.show();
             b.shoot();
-        }
-        for (Enemy e : enemies) {
-            e.display();
         }
 
     }
@@ -74,7 +74,7 @@ public class App extends PApplet {
             Enemy e = enemies.get(listnumb);
             System.out.println("bullet x pos " + b.xpos());
             System.out.println("enemy x pos " + e.xLoc());
-            if (b.xpos() < e.xLoc() + 50 && b.xpos() > e.xLoc() && b.ypos() > e.yLoc()) {
+            if (b.xpos() < e.xLoc() + 50 && b.xpos() > e.xLoc() && b.ypos() < e.yLoc()+100) {
 
                 check = true;
                 System.out.println(check);
