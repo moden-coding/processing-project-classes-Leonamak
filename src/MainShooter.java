@@ -1,4 +1,4 @@
-import processing.core.PApplet;
+import processing.core.*;
 
 public class MainShooter {
     private int x;
@@ -7,6 +7,7 @@ public class MainShooter {
     private int health;
     private int color;
     private PApplet canvas;
+    PImage image;
 
     public MainShooter(int xPos, int yPos, int speed, int health, PApplet c) {
         x = xPos;
@@ -14,11 +15,12 @@ public class MainShooter {
         this.speed=speed;
         this.health=health;
         canvas = c;
+        this.image = canvas.loadImage("shooter.png");
+        this.image.resize(128,128);
     }
     public void display() {
         color = canvas.color(100,100,100);
-        canvas.fill(color);
-        canvas.rect(x,y,100,100);
+        canvas.image(image, x-15, y);
     }
 
     public void moveLeft() {
