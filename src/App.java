@@ -26,7 +26,7 @@ public class App extends PApplet {
         for (int i = 2; i > -2; i += -1) {
             int enemyX = 500 - (100 * i);
             int enemyY = 100;
-            Enemy enemy = new Enemy(enemyX, enemyY, 1, this);
+            Enemy enemy = new Enemy(enemyX, enemyY, 1, this, 1);
             enemies.add(enemy);
         }
     }
@@ -69,20 +69,16 @@ public class App extends PApplet {
     }
 
     public boolean checkTouch(int listnumb) {
-        boolean check = false;
         for (Bullets b : bullets) {
             Enemy e = enemies.get(listnumb);
             System.out.println("bullet x pos " + b.xpos());
             System.out.println("enemy x pos " + e.xLoc());
             if (b.xpos() < e.xLoc() + 50 && b.xpos() > e.xLoc() && b.ypos() < e.yLoc()+100) {
 
-                check = true;
-                System.out.println(check);
-            } else {
-                check = false;
-            }
-
+                return true;
+                // System.out.println(check);
+            } 
         }
-        return check;
+        return false;
     }
 }
