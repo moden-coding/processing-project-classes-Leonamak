@@ -1,6 +1,6 @@
 import processing.core.*;
 
-public class Bullets {
+public class Bullet {
     private int x;
     private int y;
     private int speed;
@@ -8,7 +8,7 @@ public class Bullets {
     PImage image;
     private PApplet canvas;
 
-    public Bullets(int xPos, int yPos, int speed, PApplet c) {
+    public Bullet(int xPos, int yPos, int speed, PApplet c) {
         canvas = c;
         x = xPos;
         y = yPos;

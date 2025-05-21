@@ -4,7 +4,7 @@ import processing.core.*;
 
 public class App extends PApplet {
     MainShooter shooter;
-    ArrayList<Bullets> bullets;
+    ArrayList<Bullet> bullets;
     ArrayList<Enemy> enemies;
     PImage bg;
     PImage bulletImage;
@@ -39,15 +39,31 @@ public class App extends PApplet {
     public void draw() {
         image(bg, 0, 0);
         shooter.display();
-        for (int i = 0; i<enemies.size(); i++) {
+        for (int i = 0; i < enemies.size(); i++) {
             if (checkTouch(i)) {
                 enemies.remove(i);
             }
         }
-        for (Enemy e : enemies) {
+        for (int i = 0; i < enemies.size(); i++) {
+            Enemy e = enemies.get(i);
             e.display();
+            e.move();
         }
-        for (Bullets b : bullets) {
+
+        for(int i=0; i<bullets.size(); i++){
+            Bullet b = bullets.get(i);
+            if(b.ypos()<0){
+                bullets.remove(b);
+            }
+        }
+        if (enemies.size() == 1) {
+            int enemyX = (int) random(100, 900);
+            int enemyY = (int) random(100, 400);
+            Enemy enemy = new Enemy(enemyX, enemyY, 1, this, 1);
+            enemies.add(enemy);
+
+        }
+        for (Bullet b : bullets) {
             b.show();
             b.shoot();
         }
@@ -62,22 +78,23 @@ public class App extends PApplet {
             shooter.moveRight();
         }
         if (key == 'w') {
-            Bullets bullet = new Bullets(shooter.x() + 25, 500, 15, this);
+            Bullet bullet = new Bullet(shooter.x() + 25, 500, 15, this);
             bullets.add(bullet);
         }
 
     }
 
     public boolean checkTouch(int listnumb) {
-        for (Bullets b : bullets) {
+        for (int ii=0; ii<bullets.size(); ii++) {
+            Bullet b = bullets.get(ii);
             Enemy e = enemies.get(listnumb);
-            System.out.println("bullet x pos " + b.xpos());
-            System.out.println("enemy x pos " + e.xLoc());
-            if (b.xpos() < e.xLoc() + 50 && b.xpos() > e.xLoc() && b.ypos() < e.yLoc()+100) {
-
+            // System.out.println("bullet x pos " + b.xpos());
+            // System.out.println("enemy x pos " + e.xLoc());
+            if (b.xpos() < e.xLoc() + 50 && b.xpos() > e.xLoc() && b.ypos() < e.yLoc() + 100 && b.ypos() > e.yLoc()) {
+                bullets.remove(b);
                 return true;
                 // System.out.println(check);
-            } 
+            }
         }
         return false;
     }
