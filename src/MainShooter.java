@@ -24,10 +24,14 @@ public class MainShooter {
     }
 
     public void moveLeft() {
+        if (x>0) {
         x=x-speed;
+        }
     }
     public void moveRight() {
+        if (x<900) {
         x=x+speed;
+        }
     }
     public int x() {
         return x;

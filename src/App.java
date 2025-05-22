@@ -1,15 +1,22 @@
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import processing.core.*;
 
 public class App extends PApplet {
     MainShooter shooter;
+    Score score;
     ArrayList<Bullet> bullets;
     ArrayList<Enemy> enemies;
     PImage bg;
     PImage bulletImage;
     int enemyX;
     int enemyY;
+    boolean left = false;
+    boolean right = false;
+    boolean shoot = false;
+    boolean shootable = true;
 
     public static void main(String[] args) {
         PApplet.main("App");
@@ -20,6 +27,7 @@ public class App extends PApplet {
         bulletImage = loadImage("bullet.png");
         bg.resize(1000, 900);
         bulletImage.resize(12, 12);
+        score = new Score();
         shooter = new MainShooter(450, 600, 10, 5, this);
         bullets = new ArrayList<>();
         enemies = new ArrayList<>();
@@ -37,6 +45,9 @@ public class App extends PApplet {
     }
 
     public void draw() {
+        textSize(20);
+        fill(255);
+        text(score.run(), 50, 50);
         image(bg, 0, 0);
         shooter.display();
         for (int i = 0; i < enemies.size(); i++) {
@@ -53,37 +64,69 @@ public class App extends PApplet {
         for(int i=0; i<bullets.size(); i++){
             Bullet b = bullets.get(i);
             if(b.ypos()<0){
-                bullets.remove(b);
+            bullets.remove(b);
             }
         }
         if (enemies.size() == 1) {
+            for (int i = 0; i < 4; i++) {
             int enemyX = (int) random(100, 900);
             int enemyY = (int) random(100, 400);
             Enemy enemy = new Enemy(enemyX, enemyY, 1, this, 1);
             enemies.add(enemy);
+            }
 
         }
         for (Bullet b : bullets) {
             b.show();
             b.shoot();
         }
+        if (left) {
+            shooter.moveLeft();
+        }
+        if (right) {
+            shooter.moveRight();
+        }
+        if (shoot && shootable) {
+            Bullet bullet = new Bullet(shooter.x() + 25, 500, 15, this);
+            bullets.add(bullet);
+            shootable = false;
+            Timer timer = new Timer();
+            TimerTask task = new TimerTask() {
+            public void run() {
+                shootable=true;
+            }
+            };
+            timer.schedule(task, 100);
+
+
+        }
 
     }
 
     public void keyPressed() {
         if (key == 'a') {
-            shooter.moveLeft();
+            left = true;
         }
         if (key == 'd') {
             shooter.moveRight();
+            right = true;
         }
         if (key == 'w') {
-            Bullet bullet = new Bullet(shooter.x() + 25, 500, 15, this);
-            bullets.add(bullet);
+            shoot = true;
         }
 
     }
-
+    public void keyReleased() {
+        if (key == 'w' || key == 'W') {
+          shoot = false;
+        }
+        if (key == 'a' || key == 'A') {
+          left = false;
+        }
+        if (key == 'd' || key == 'D') {
+          right = false;
+        }
+    }
     public boolean checkTouch(int listnumb) {
         for (int ii=0; ii<bullets.size(); ii++) {
             Bullet b = bullets.get(ii);
