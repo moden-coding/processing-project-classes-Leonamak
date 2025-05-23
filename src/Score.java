@@ -1,14 +1,19 @@
 public class Score {
-    private int time;
+    private double time;
     public Score() {
         time = 0;
     }
-    public int run() {
+    public double run() {
         time = time+1;
-        return time;
+        return time/10;
     }
-    public int take(int subtract) {
+    public double take(double subtract) {
+        if (time<0) {
+            time=0;
+        } else {
         time = time-subtract;
-        return time;
-    }
+        }
+        return time/10;
+}
+    
 }

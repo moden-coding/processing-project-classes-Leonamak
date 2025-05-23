@@ -17,6 +17,9 @@ public class App extends PApplet {
     boolean right = false;
     boolean shoot = false;
     boolean shootable = true;
+    int enemiesKilled;
+    int scene;
+    boolean cont = false;
 
     public static void main(String[] args) {
         PApplet.main("App");
@@ -31,6 +34,8 @@ public class App extends PApplet {
         shooter = new MainShooter(450, 600, 10, 5, this);
         bullets = new ArrayList<>();
         enemies = new ArrayList<>();
+        enemiesKilled = 0;
+        scene = 0;
         for (int i = 2; i > -2; i += -1) {
             int enemyX = 500 - (100 * i);
             int enemyY = 100;
@@ -45,10 +50,19 @@ public class App extends PApplet {
     }
 
     public void draw() {
-        textSize(20);
-        fill(255);
-        text(score.run(), 50, 50);
         image(bg, 0, 0);
+        if (scene==1) {
+            textSize(45);
+            textAlign(CENTER);
+            text("YOU LOST! SCORE:", 500,400);
+            text(enemiesKilled, 500, 450 );
+        }
+        if (scene==2) {
+            textSize(45);
+            textAlign(CENTER);
+            text("YOU WON!", 500,400);
+        }
+        else if (scene==0) {
         shooter.display();
         for (int i = 0; i < enemies.size(); i++) {
             if (checkTouch(i)) {
@@ -100,6 +114,15 @@ public class App extends PApplet {
 
 
         }
+        textSize(20);
+        fill(255);
+        String timed = String.valueOf(score.run());
+        text(timed, 50, 50);
+        text(enemiesKilled, 50, 70);
+        if (score.run()>60 && cont==false) {
+            scene=1;
+        }
+    }
 
     }
 
@@ -113,6 +136,12 @@ public class App extends PApplet {
         }
         if (key == 'w') {
             shoot = true;
+        }
+        if (key == 'p') {
+            scene=1;
+        }
+        if (key == 'l') {
+            scene=2;
         }
 
     }
@@ -135,6 +164,8 @@ public class App extends PApplet {
             // System.out.println("enemy x pos " + e.xLoc());
             if (b.xpos() < e.xLoc() + 50 && b.xpos() > e.xLoc() && b.ypos() < e.yLoc() + 100 && b.ypos() > e.yLoc()) {
                 bullets.remove(b);
+                score.take(25);
+                enemiesKilled+=1;
                 return true;
                 // System.out.println(check);
             }
