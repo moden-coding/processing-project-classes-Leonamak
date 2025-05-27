@@ -1,19 +1,23 @@
+import processing.core.*;
 public class Score {
-    private double time;
+    private float time;
     public Score() {
         time = 0;
     }
-    public double run() {
+    public float run() {
         time = time+1;
-        return time/10;
+        return time/100;
     }
-    public double take(double subtract) {
+    public float take(float subtract) {
         if (time<0) {
             time=0;
         } else {
         time = time-subtract;
         }
         return time/10;
-}
-    
+    }
+    public float stop() {
+        return time/100;
+    }
+
 }

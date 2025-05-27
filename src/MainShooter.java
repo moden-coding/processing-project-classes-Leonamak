@@ -15,7 +15,7 @@ public class MainShooter {
         this.speed=speed;
         this.health=health;
         canvas = c;
-        this.image = canvas.loadImage("shooter.png");
+        this.image = canvas.loadImage("Images/shooter.png");
         this.image.resize(128,128);
     }
     public void display() {

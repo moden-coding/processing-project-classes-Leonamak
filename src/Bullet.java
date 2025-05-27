@@ -14,7 +14,7 @@ public class Bullet {
         y = yPos;
         touching=false;
         this.speed=speed;
-        this.image = canvas.loadImage("bullet.png");
+        this.image = canvas.loadImage("Images/bullet.png");
         this.image.resize(60,60);
     }
 

@@ -15,7 +15,7 @@ public class Enemy {
       x = xPos;
       y = yPos;
       this.speed = speed;
-      this.image = canvas.loadImage("enemy.png");
+      this.image = canvas.loadImage("Images/enemy.png");
    }
    // public void enemyDefeat() {
    // if (health==0) {
