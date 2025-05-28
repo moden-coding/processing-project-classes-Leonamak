@@ -1,4 +1,3 @@
-import processing.core.*;
 public class Score {
     private float time;
     public Score() {
