@@ -8,22 +8,22 @@ import java.io.IOException;
 import processing.core.*;
 
 public class App extends PApplet {
-    MainShooter shooter;
-    Score score;
-    ArrayList<Bullet> bullets;
-    ArrayList<Enemy> enemies;
-    PImage bg;
-    PImage bulletImage;
-    int enemyX;
-    int enemyY;
-    boolean left = false;
-    boolean right = false;
-    boolean shoot = false;
-    boolean shootable = true;
-    int enemiesKilled;
-    int scene;
-    boolean cont = false;
-    boolean wasReturned = false;
+    private MainShooter shooter;
+    private Score score;
+    private ArrayList<Bullet> bullets;
+    private ArrayList<Enemy> enemies;
+    private PImage bg;
+    private PImage bulletImage;
+    private int enemyX;
+    private int enemyY;
+    private boolean left = false;
+    private boolean right = false;
+    private boolean shoot = false;
+    private boolean shootable = true;
+    private int enemiesKilled;
+    private int scene;
+    private boolean cont = false;
+    private boolean wasReturned = false;
 
     public static void main(String[] args) {
         PApplet.main("App");
@@ -113,7 +113,7 @@ public class App extends PApplet {
             }
             if (enemies.size() == 1) { // this is important. we make enemies!!!
                 for (int i = 0; i < 6; i++) {
-                    int enemyX = (int) random(100, 900);
+                int enemyX = (int) random(100, 900);
                     int enemyY = (int) random(100, 400);
                     Enemy enemy = new Enemy(enemyX, enemyY, 1, this, 1);
                     enemies.add(enemy);
@@ -158,7 +158,7 @@ public class App extends PApplet {
 
     }
 
-    public void keyPressed() { //this is more movement, as well as cheat codes
+    public void keyPressed() { //this is more movement code
         if (key == 'a') {
             left = true;
         }
@@ -168,12 +168,6 @@ public class App extends PApplet {
         }
         if (key == 'w') {
             shoot = true;
-        }
-        if (key == 'p') {
-            scene = 1;
-        }
-        if (key == 'l') {
-            scene = 2;
         }
         if (key == ' ') {
             scene = 3;
@@ -193,19 +187,16 @@ public class App extends PApplet {
         }
     }
 
-    public boolean checkTouch(int listnumb) { //oooh, fancy method number one. this checks the touching between the bullet and the enemy!
+    public boolean checkTouch(int listnumb) { //this checks the touching between the bullet and the enemy!
         for (int ii = 0; ii < bullets.size(); ii++) {
             Bullet b = bullets.get(ii);
             Enemy e = enemies.get(listnumb);
-            // System.out.println("bullet x pos " + b.xpos());
-            // System.out.println("enemy x pos " + e.xLoc());
             if (b.xpos() < e.xLoc() + 50 && b.xpos() > e.xLoc() && b.ypos() < e.yLoc() + 100 && b.ypos() > e.yLoc()) {
                 bullets.remove(b);
                 System.out.println("hi");
                 score.take(25);
                 enemiesKilled += 1;
                 return true;
-                // System.out.println(check);
             }
         }
         return false;

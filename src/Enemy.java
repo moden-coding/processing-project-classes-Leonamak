@@ -7,7 +7,7 @@ public class Enemy {
    private int color;
    private PApplet canvas;
    private double speed;
-   PImage image;
+   private PImage image;
 
    public Enemy(int xPos, int yPos, int health, PApplet c, double speed) {
       canvas = c;

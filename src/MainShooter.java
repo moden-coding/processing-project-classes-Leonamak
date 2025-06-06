@@ -7,7 +7,7 @@ public class MainShooter {
     private int health;
     private int color;
     private PApplet canvas;
-    PImage image;
+    private PImage image;
 
     public MainShooter(int xPos, int yPos, int speed, int health, PApplet c) {
         x = xPos;
